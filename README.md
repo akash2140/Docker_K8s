@@ -28,13 +28,13 @@ Why do we need Independent , Standardized packages in software developement?????
 
 Virtual Machines Vs Docker Containers:-
 			
-	----------------------------------------------------------------------------------------------
+	--------------------------------------------------------------------------------------------------------------------------------------
 							APP1                         			APP2                         
-						Libraries/Dependencies						Libraries/Dependencies
-							Virtual OS(Linux)								Virtual OS(Linux)
+						Libraries/Dependencies				Libraries/Dependencies
+						Virtual OS(Linux)				Virtual OS(Linux)
 			
-													HOST Operating System
-------------------------------------------------------------------------------------------------
+									HOST Operating System
+----------------------------------------------------------------------------------------------------------------------------------------------
 
 
 -
@@ -65,14 +65,14 @@ Docker and Containers is the solution here. The key Concept here are containers 
 		
 		
 
--------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------
 							APP1                         			APP2                         
-						Libraries/Dependencies						Libraries/Dependencies
+						Libraries/Dependencies				Libraries/Dependencies
 											
-												Docker Engine(Light weight small Tool)
-												OS Built-in/Emulated Container Support
-													HOST Operating System
-------------------------------------------------------------------------------------------------
+								Docker Engine(Light weight small Tool)
+								OS Built-in/Emulated Container Support
+									HOST Operating System
+-------------------------------------------------------------------------------------------------------------------------------------------
 		
 The APP1/APP2 might contain small layer of OS inside it but it isnt as big like bloated OS in the case of VM's...
 
@@ -182,10 +182,10 @@ REAL LIFE PART:-
 K8S':-
 
 
-		1. K8s Introduction and Basics
-		2. K8S Data and Volumes
-		3. K8s Networking
-		4. Deploying k8s clusters
+	1. K8s Introduction and Basics
+	2. K8S Data and Volumes
+	3. K8s Networking
+	4. Deploying k8s clusters
 
 
 
@@ -294,12 +294,12 @@ So it contains the setup instructions for our own image.
 
 	1.We typically start from the "FROM" keyqword. It basically allows us to build our image from the base image(In our case Node image) It is not compulsory even we can build it from scratch by download Node and using that , but It is not required.
 
-								FROM node  [ Docker will first search the image with "node" name in our system , Or else Docker will search it on Docker Hub. This command Indicates that before creating my own image , I want to have "node" image and then I wish to continue ]
+					FROM node  [ Docker will first search the image with "node" name in our system , Or else Docker will search it on Docker Hub. This command Indicates that before creating my own image , I want to have "node" image and then I wish to continue ]
 
 	2. In the next step we want to tell docker , what files in our project we want to put into our image.
 
 
-								COPY . .   [ The "first dot" indicates we want to copy all files/folders from the directory which contains the docker file excluding the docker file though.    ]
+					COPY . .   [ The "first dot" indicates we want to copy all files/folders from the directory which contains the docker file excluding the docker file though.    ]
 
 Every image create / container running has the internal file system which is totally detached from our file machine. It's hidden away inside of the docker container. Thwe "second dot" indicates that we want to copy all our files into the container root(.) path. We can copy as COPY . /app. It will copy our files into /app path of Docker file system
 
@@ -307,15 +307,15 @@ A container[or therefore the image] contains the environment + code . Hence we n
 
 	3. Actually all these commands will run under the working directory of our Docker image. By default it is the root directory whcih is the working directory. If we want to specify the working directory as /app , we want to run all tjhe commands like npm install inside the /app directory.
 
-							WORKDIR /app  [ Specifies our working directory for our image ]
+					WORKDIR /app  [ Specifies our working directory for our image ]
 
 	4.  We had to have run npm install to have all the dependencies for our Node Express APP.
 
-								RUN npm install [ Will run these commands under the working directory ]
+					RUN npm install [ Will run these commands under the working directory ]
 
 	5. We want to start our server 
 
-								RUN node server.js		
+					RUN node server.js		
 
 [ This is incorrect because this will run with the process of setting up of Docker image But we dont want that we want to run our image as container, We want our sderver to be UP at that time only, not in the process of setting up the server. ]
 
@@ -351,9 +351,9 @@ RUNNING A CONTAINER BASED ON OUR OWN IMAGE:-
 Lets see how we can turn this into an image and into the container ultimately.
 
 
-														>>>>>>> docker build .
-										[ docker build command tells, the docker to build docker  image baseed on the docker file]
-										["." indicates the path which we need to specify where is the docker file  ]
+				>>>>>>> docker build .
+				[ docker build command tells, the docker to build docker  image baseed on the docker file]
+				["." indicates the path which we need to specify where is the docker file  ]
 
 Inorder to run this generate image as container, we need to use the below command:
 														>>>>>>> docker run [image_id]   {Image_Id could be foudn when we had built the image}
@@ -365,9 +365,9 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS  
 
 NOTE:- When we see and try to listen omn the EXPOSED port , we see we cannot see the Node server. Why is that? This is because if we specify the Port on the Dopcker File, It doesnt really expose our Localport to the container port. It is just for Documentation purpose and optional. Hence we need to do a bit more , when we want  to run the container. 
 
-													>>>>>>> docker run -p 3000:80 [image_id]
-																		3000 -> hiost maxchine port
-																			80 : on which container application is running on.
+				>>>>>>> docker run -p 3000:80 [image_id]
+				3000 -> hiost maxchine port
+				80 : on which container application is running on.
 
 
 In the last lecture, we started a container which also exposed a port (port 80).
